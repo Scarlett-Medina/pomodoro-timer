@@ -1,3 +1,6 @@
+console.log("JavaScript is connected");
+
+
 let workDuration = 25 * 60; // 25 minutes in seconds
 let breakDuration = 5 * 60; // 5 minutes in seconds
 let longBreakDuration = 15 * 60; // 15 minutes in seconds

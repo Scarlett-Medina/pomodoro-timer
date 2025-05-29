@@ -1,9 +1,8 @@
 console.log("JavaScript is connected");
 
-
-let workDuration = 25 * 60; // 25 minutes in seconds
-let breakDuration = 5 * 60; // 5 minutes in seconds
-let longBreakDuration = 15 * 60; // 15 minutes in seconds
+let workDuration = 25 * 60;
+let breakDuration = 5 * 60;
+let longBreakDuration = 15 * 60;
 
 let timeLeft = workDuration;
 let timer;
@@ -24,7 +23,7 @@ const resetBtn = document.getElementById("reset");
 function updateTimerDisplay() {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
-  timerDisplay.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  timerDisplay.textContent = \`\${String(minutes).padStart(2, "0")}:\${String(seconds).padStart(2, "0")}\`;
 }
 
 function startTimer() {
@@ -72,7 +71,7 @@ function endSession() {
 
   if (currentSession === "work") {
     sessionCount++;
-    sessionCounter.textContent = `Completed Pomodoros: ${sessionCount}`;
+    sessionCounter.textContent = \`Completed Pomodoros: \${sessionCount}\`;
     currentSession = sessionCount % 4 === 0 ? "longBreak" : "shortBreak";
     timeLeft = currentSession === "longBreak" ? longBreakDuration : breakDuration;
   } else {
@@ -93,4 +92,4 @@ pauseBtn.addEventListener("click", pauseTimer);
 resumeBtn.addEventListener("click", resumeTimer);
 resetBtn.addEventListener("click", resetTimer);
 
-updateTimerDisplay(); // initialize
+updateTimerDisplay();

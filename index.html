@@ -2,25 +2,99 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pomodoro Timer</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main>
-    <h1>Pomodoro Timer</h1>
-    <div id="timer">25:00</div>
+  <div class="app" id="app">
+    <!-- LEFT PANEL: Tasks -->
+    <aside class="task-panel" id="task-panel">
+      <!-- Moved toggle button here -->
+      <div class="task-topbar">
+        <button id="toggle-tasks" class="collapse-btn">⇤</button>
+      </div>
 
-    <div class="buttons">
-      <button id="start">Start</button>
-      <button id="pause" disabled>Pause</button>
-      <button id="resume" disabled>Resume</button>
-      <button id="reset">Reset</button>
+      <div class="task-header">
+        <button id="pending-tab" class="active">Pending</button>
+        <button id="completed-tab">Completed</button>
+      </div>
+
+      <div id="task-content">
+        <p class="no-tasks">No tasks for this day</p>
+        <ul id="task-list"></ul>
+
+        <!-- ✅ Always visible "Add Task" link -->
+        <div class="add-task-bar">
+          <a href="#" id="add-task-link">+ Add a new task</a>
+        </div>
+      </div>
+
+      <form id="task-form" class="hidden">
+        <input id="task-input" type="text" placeholder="Enter task..." required />
+        <button type="submit">Add</button>
+      </form>
+    </aside>
+
+    <!-- RIGHT PANEL: Timer -->
+    <main class="timer-panel">
+      <button id="toggle-tasks-show" class="collapse-btn hidden">⇢</button>
+      <button id="settings-btn" class="settings-icon">⚙️</button>
+
+      <div class="session-tabs">
+        <button class="tab active" data-type="work">Focus</button>
+        <button class="tab" data-type="shortBreak">Short Break</button>
+        <button class="tab" data-type="longBreak">Long Break</button>
+      </div>
+
+      <div class="timer-display" id="timer">25:00</div>
+
+      <div class="task-selector">
+        <label for="selected-task">Current Task:</label>
+        <select id="selected-task">
+          <option value="">-- Select Task --</option>
+        </select>
+      </div>
+
+      <div class="time-adjust">
+        <button class="add-time" data-minutes="25">+25 min</button>
+        <button class="add-time" data-minutes="10">+10 min</button>
+        <button class="add-time" data-minutes="5">+5 min</button>
+        <button class="add-time" data-minutes="1">+1 min</button>
+      </div>
+
+      <div class="controls">
+        <button id="start">Start</button>
+        <button id="pause" class="hidden">Pause</button>
+        <button id="resume" class="hidden">Resume</button>
+        <button id="reset" class="hidden">Reset</button>
+      </div>
+
+      <p id="session-type">Work Session</p>
+      <p id="session-count">Completed Pomodoros: 0</p>
+    </main>
+  </div>
+
+  <!-- SETTINGS MODAL -->
+  <div id="settings-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Pomodoro duration (minutes)</h3>
+      <input type="number" id="pomodoro-input" min="1" />
+
+      <div class="breaks">
+        <div>
+          <label>Short break (min)</label>
+          <input type="number" id="short-input" min="1" />
+        </div>
+        <div>
+          <label>Long break (min)</label>
+          <input type="number" id="long-input" min="1" />
+        </div>
+      </div>
+
+      <button id="save-settings">Update Settings</button>
     </div>
-
-    <p id="session-type">Work Session</p>
-    <p id="session-count">Completed Pomodoros: 0</p>
-  </main>
+  </div>
 
   <audio id="alarm" src="https://www.soundjay.com/buttons/sounds/beep-07.mp3"></audio>
   <script src="script.js"></script>

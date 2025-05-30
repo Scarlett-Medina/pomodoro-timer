@@ -1,26 +1,319 @@
+:root {
+  --bg: #181818;
+  --panel: #222;
+  --text: #fff;
+  --muted: #999;
+  --accent: #a176f1;
+  --btn-bg: #333;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: pink;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', sans-serif;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+  transition: all 0.3s ease;
+}
+
+.task-panel {
+  width: 30%;
+  background: var(--panel);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: width 0.3s ease;
+}
+
+.timer-panel {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
   text-align: center;
-  padding: 2rem;
+  transition: width 0.3s ease;
 }
 
-main {
-  background: white;
-  max-width: 400px;
-  margin: auto;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+.settings-icon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--btn-bg);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.3rem 0.5rem;
+  cursor: pointer;
 }
 
-#timer {
-  font-size: 4rem;
+/* Tabs */
+.session-tabs {
+  margin-top: 2rem;   /* ✅ Add this line to push it down */
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.tab {
+  background: #2c2c2c;
+  color: white;
+  border: none;
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.tab.active {
+  background: var(--accent);
+}
+
+.timer-display {
+  font-size: 5rem;
   margin: 1rem 0;
 }
 
-.buttons button {
-  margin: 0.5rem;
-  padding: 0.5rem 1rem;
+.time-adjust {
+  margin: 1rem 0;
+}
+.add-time {
+  background: #2c2c2c;
+  color: white;
+  border: none;
+  margin: 0 0.3rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.controls button {
+  margin: 0.3rem;
+  padding: 0.5rem 1.2rem;
   font-size: 1rem;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.hidden {
+  display: none !important;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.task-header button {
+  flex: 1;
+  margin: 0 0.25rem;
+  background: var(--btn-bg);
+  border: none;
+  padding: 0.5rem;
+  color: var(--text);
+  border-radius: 5px;
+  cursor: pointer;
+}
+.task-header button.active {
+  background: var(--accent);
+}
+
+#task-list {
+  list-style: none;
+  margin-top: 1rem;
+}
+.task-item {
+  background: #2c2c2c;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.task-item.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+.task-item button {
+  background: transparent;
+  color: var(--muted);
+  border: none;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.no-tasks {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+#task-form {
+  margin-top: auto;
+  display: flex;
+  gap: 0.5rem;
+}
+#task-input {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: none;
+  background: #333;
+  color: white;
+}
+
+.task-selector {
+  margin: 1rem 0;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+}
+.modal.hidden {
+  display: none;
+}
+.modal-content {
+  background: #222;
+  color: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+}
+.modal-content input {
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+.breaks {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.breaks input {
+  width: 100%;
+}
+#save-settings {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.5rem;
+  background: #444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Collapse button in task panel */
+#toggle-tasks {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #444;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Restore button when task panel hidden */
+#toggle-tasks-show {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: #444;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.2rem 0.6rem;
+  cursor: pointer;
+  z-index: 10;
+  display: none;
+}
+
+/* When collapsed */
+.app.collapsed .task-panel {
+  display: none;
+}
+.app.collapsed .timer-panel {
+  width: 100%;
+}
+.app.collapsed #toggle-tasks-show {
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app {
+    flex-direction: column;
+  }
+
+  .task-panel,
+  .timer-panel {
+    width: 100%;
+  }
+
+  #toggle-tasks,
+  #toggle-tasks-show {
+    top: 0.5rem;
+    right: auto;
+    left: 0.5rem;
+  }
+}
+.task-topbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+}
+
+#toggle-tasks {
+  position: static; /* remove absolute positioning */
+  padding: 0.3rem 0.6rem;
+  font-size: 1rem;
+  background: #444;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-task-bar {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.add-task-bar a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.95rem;
 }
